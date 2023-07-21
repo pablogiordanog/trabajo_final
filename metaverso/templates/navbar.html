@@ -1,0 +1,59 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<header id="header">
+        
+    <div class="container__header">
+        {%if user.is_authenticated%}
+        <div class="logo">
+            <a href="{% url 'inicio' %}"><img src="{% static 'images/logo-infoverse.png' %}" alt=""></a>
+        </div>
+        <div class="container__nav">
+            <nav id="nav">
+                <ul>
+                    <li><a href="#">NOSOTROS</a></li>
+                    <li><a href="{% url 'noticias' %}">NOTICIAS</a></li>
+                    <li><a href="#">METAVERSO</a></li>
+                    <li><a href="#">{{user.username}}</a></li>
+                    <div class="user-profile">
+                        <img src="{{ user.imagen.url }}" alt="Profile Picture">
+                    <li><a href="{% url 'cerrar_sesion' %}" class="select">Cerrar Sesion</a></li>
+                </ul>
+            </nav>
+            <div class="btn__menu" id="btn_menu"><i class="fas fa-bars"></i></div>
+        </div>
+    </div>
+
+    {%else%}
+        <div class="logo">
+            <a href="{% url 'inicio' %}"><img src="{% static 'images/logo-infoverse.png' %}" alt=""></a>
+        </div>
+        <div class="container__nav">
+            <nav id="nav">
+                <ul>
+                    <li><a href="#">NOSOTROS</a></li>
+                    <li><a href="{% url 'noticias' %}">NOTICIAS</a></li>
+                    <li><a href="#">METAVERSO</a></li>
+                    <li><a href="{% url 'registro' %}" class="select">Ingresar/Registrate</a></li>
+                </ul>
+            </nav>
+            <div class="btn__menu" id="btn_menu"><i class="fas fa-bars"></i></div>
+        </div>
+    </div>
+   {%endif%}
+</header>
+
+<script src="{% static 'estilos.js' %}"> </script>
+</body>
+</html>
