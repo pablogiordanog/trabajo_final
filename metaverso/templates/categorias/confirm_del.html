@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Eliminar category</h1>
+
+<p>Seguro que desea eliminar la categoria?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" action="" value="Si, eliminar." />
+</form>
+<a href="{% url 'apps.categorias:list' %}" class="btn btn-primary" style="font-size: small;">No, volver.</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Categorias</title>
+{% endblock %}
+
+{% block content %}
+<section data-bs-version="5.1" class="timeline3 cid-tf4QbpyVP7" id="timeline3-o">
+    <div class="container-fluid" style="margin-top: 2%" align="center">
+        <div class="mbr-section-head">
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2" style="text-align: center;">
+                <strong>Categorias</strong>
+            </h3>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-primary">Lista de Categorias
+                <a class="btn btn-outline-secondary" href="{% url 'apps.categorias:add_category' %}">Nueva Categoria</a>
+                <a class="btn btn-outline-secondary" href="{% url 'inicio' %}">Ir a Menu Principal</a>
+            </li>
+            {% if categorias %}
+            {% for c in categorias %}    
+            <li class="list-group-item list-group-item-info">
+                 
+                <div align="center">
+                    {{c.nombre}}
+                    <a href="{% url 'apps.categorias:update_category' c.id %}" class="btn btn-primary"
+                        style="font-size: small;">Actualizar</a>
+                    |
+                    <a href="{% url 'apps.categorias:delete_category' c.id %}" class="btn btn-primary"
+                        style="font-size: small;">Eliminar</a>       
+                </div>
+            </li>    
+            {% endfor %}
+            {% endif %}
+        </ul>
+</section>
+{% endblock %}

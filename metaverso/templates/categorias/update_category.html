@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navegacion %}
+{% include 'navigation.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="main-container" style="text-align: center; margin-top: 12%;">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <form method="post">{% csrf_token %}
+            <div class="overlay">
+                <form>
+                    <div class="con">
+                        <header class="head-form">
+                            <h2>Actualizar categorias</h2>
+                            <p>Actualice los datos y presione el botón de Actualizar, luego podrá ver su categoria en la sección
+                                categorias:</p>
+                        </header>
+                        <div>
+                            {{form.as_p}}
+                            
+                            {% if form.errors %}
+                            {% for e in form.erros %}
+                            {{e}}
+                            {% endfor %}
+                            {% endif %}
+                            
+                            <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
+                                style="text-align: center;" data-bs-target="#exampleModal" value="Actualizar categoria" />
+                                <a class="btn btn-outline-secondary" href="{% url 'apps.categorias:list' %}">Volver</a>
+                            
+                                <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">No Se Actualizo la Categoria</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Su categoria NO fue Actualizada!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-outline-secondary" href="{% url 'apps.categorias:list' %}">Volver la Lista de Categorias</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </form>
+    </form>
+</div>
+{% endblock %}

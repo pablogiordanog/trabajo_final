@@ -29,7 +29,8 @@ urlpatterns = [
     path('', index, name='inicio'),
     path('descripcion/', descripcion, name='descripcion'),
     path('', include('apps.blog.urls')),
-    
+    path('noticias/', include('apps.noticias.urls')),
+    path('categorias/', include('apps.categorias.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

@@ -23,8 +23,8 @@
             <nav id="nav">
                 <ul>
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
-                    <li><a href="{% url 'noticias' %}">NOTICIAS</a></li>
-                    <li><a href="">CATEGORIAS</a></li>
+                    <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
+                    <li><a href="{% url 'apps.categorias:list' %}">CATEGORIAS</a></li>
                     <li><a href="#">METAVERSO</a></li>
                     <li><a href="#">{{user.username}}</a></li>
                     <div class="user-profile">
@@ -44,8 +44,8 @@
             <nav id="nav">
                 <ul>
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
-                    <li><a href="{% url 'noticias' %}">NOTICIAS</a></li>
-                    <li><a href="">CATEGORIAS</a></li>
+                    <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
+                    <li><a href="{% url 'apps.categorias:list' %}">CATEGORIAS</a></li>
                     <li><a href="#">METAVERSO</a></li>
                     <li><a href="{% url 'registro' %}" class="select">Ingresar/Registrate</a></li>
                 </ul>
