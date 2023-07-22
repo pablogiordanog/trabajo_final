@@ -22,10 +22,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 from .views import index
+from .views import descripcion
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='inicio'),
+    path('descripcion/', descripcion, name='descripcion'),
     path('', include('apps.blog.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

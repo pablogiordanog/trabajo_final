@@ -580,3 +580,75 @@ footer{
 }
 
 
+/*DESCRIPCION */
+
+#inicio {
+    position: relative;
+    height: 100vh;
+    padding: 0 40px;
+}
+
+#inicio .contenido {
+    max-width: 1200px;
+    margin: auto;
+    height: 100%;
+}
+
+#inicio .contenido .info {
+    position: relative;
+    top: 55%;
+    transform: translateY(-50%);
+    z-index: 10;
+    animation: aparecer 2s forwards;
+}
+
+@keyframes aparecer {
+    0% {
+        left: -50px;
+        opacity: 0;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+}
+
+#inicio .contenido .info h3 {
+    font-size: 50px;
+    
+    color: black;
+    -webkit-text-stroke: 2px #000;
+    transition: .5s;
+}
+
+#inicio .contenido .info span {
+    display: inline-block;
+    font-size: 25px;
+    color: #0b0b0b;
+    margin-bottom: 15px;
+}
+
+#inicio .contenido .info .redes p {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    color: #070707;
+    margin-right: 150px;
+    font-size: 25px;
+}
+
+#inicio .contenedor-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100vh;
+    clip-path: ellipse(70% 80% at 70% 50%);
+}
+
+#inicio .contenedor-img .imagen {
+    background-image: url("../images/anime1vr.png");
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    background-position: 50%;
+}
