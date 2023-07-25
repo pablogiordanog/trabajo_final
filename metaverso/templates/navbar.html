@@ -1,13 +1,13 @@
 {%load static%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 
-    <link rel="stylesheet" href="{% static 'estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
 
 </head>
@@ -22,14 +22,22 @@
         <div class="container__nav">
             <nav id="nav">
                 <ul>
+                    {% if user.es_colaborador %}
+                    <li><a href="{% url 'apps.noticias:add_notice' %}"  class="select">Nueva Noticia</a></li>
+                    {% endif %}
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
                     <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
-                    <li><a href="{% url 'apps.categorias:list' %}">CATEGORIAS</a></li>
                     <li><a href="#">METAVERSO</a></li>
                     <li><a href="#">{{user.username}}</a></li>
-                    <div class="user-profile">
+                    <div class="profile">
                         <img src="{{ user.imagen.url }}" alt="Profile Picture">
-                    <li><a href="{% url 'cerrar_sesion' %}" class="select">Cerrar Sesion</a></li>
+                        <div class="options">
+                          {% if user.es_colaborador %}
+                          <a href="{% url 'listar' %}"">Listar Usuarios</a>
+                          {% endif %}
+                          <a href="{% url 'editar_perfil' user.pk %}">Editar Mi Perfil</a>  
+                          <a href="{% url 'cerrar_sesion' %}">Cerrar Sesion</a>
+                        </div>
                 </ul>
             </nav>
             <div class="btn__menu" id="btn_menu"><i class="fas fa-bars"></i></div>
@@ -45,7 +53,6 @@
                 <ul>
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
                     <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
-                    <li><a href="{% url 'apps.categorias:list' %}">CATEGORIAS</a></li>
                     <li><a href="#">METAVERSO</a></li>
                     <li><a href="{% url 'registro' %}" class="select">Ingresar/Registrate</a></li>
                 </ul>
@@ -56,6 +63,6 @@
    {%endif%}
 </header>
 
-<script src="{% static 'estilos.js' %}"> </script>
+<script src="{% static 'js/estilos.js' %}"> </script>
 </body>
 </html>

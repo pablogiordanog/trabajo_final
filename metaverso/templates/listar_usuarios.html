@@ -1,0 +1,47 @@
+{% load static %}
+{%include 'navbar.html'%}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>LISTADO DE USUARIOS</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listar.css' %}">
+
+</head>
+<body>
+
+    <div class="container__background-triangle">
+        <div class="triangle triangle1"></div>
+        <div class="triangle triangle2"></div>
+        <div class="triangle triangle3"></div>
+    </div>
+    
+
+    <div class="container__card2">
+        {% for item in usuarios %}
+            <div class="card2">
+                <div class="cover__card">
+                    <img src="{{ item.imagen.url }}" alt="">
+                </div>
+                <h2>Username: {{ item.username }}</h2>
+                <p>Nombre: {{ item.first_name }}</p>
+                <p>Apellido: {{ item.last_name }}</p>
+                
+                <hr>
+                <div class="footer__card">
+                    <h3 class="user__name"> <a href="{% url 'eliminar_usuario' item.pk %}" class="eliminar-link">Eliminar usuario</a></h3>
+                    <i><a href="{% url 'editar_perfil' item.pk %}" class="eliminar-link">Editar Perfil</a></i>
+                </div>
+            </div>
+        
+            {% endfor %}
+    </div>
+
+
+    <script src="{% static 'estilos.js' %}"> </script>
+</body>
+
+</html>

@@ -1,12 +1,12 @@
-{% load static %}
+
 {%include 'navbar.html'%}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nueva Noticia</title>
+    <title>CATEGORIA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
@@ -14,20 +14,18 @@
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="main-container" style="text-align: center; margin-top: 10%;">
+    <div class="main-container" style="text-align: center; margin-top: 12%;">
         <form action="" method="POST" enctype="multipart/form-data">
             <form method="post">{% csrf_token %}
                 <div class="overlay">
                     <form>
                         <div class="con">
-                            
+                          
                             <div>
                                 {{form.as_p}}
-                                {{form.media}}
-                                <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_category' %}">Agrega Categoria</a>
                                 <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
-                                    style="text-align: center;" data-bs-target="#exampleModal" value="Guardar noticia" />
-                                    <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver</a>
+                                    style="text-align: center;" data-bs-target="#exampleModal" value="Guardar categoria" />
+                                    <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_notice' %}">Volver</a>
                                 
                                     <!-- Modal -->
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -35,12 +33,12 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">No Se Cargo Noticia</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">No Se Cargo Categoria</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Su noticia NO fue cargada!
+                                                La categoria NO fue cargó!
                                             </div>
                                             <div class="modal-footer">
                                                 <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver la Lista de Noticias</a>
@@ -55,13 +53,10 @@
             </form>
         </form>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-    
 </body>
 </html>
-
 
 

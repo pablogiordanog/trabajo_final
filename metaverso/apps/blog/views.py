@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from.models import Usuarios
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -25,7 +25,7 @@ def login_or_register(request):  #VISTA DE LOGIN Y REGISTRO
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('noticias')  # Redireccionar a la página de noticias después del inicio de sesión.
+                return redirect('apps.noticias:list')  # Redireccionar a la página de noticias después del inicio de sesión.
         elif register_form.is_valid():
             user = register_form.save(commit=False)
             if 'imagen' in request.FILES:
@@ -42,7 +42,23 @@ def login_or_register(request):  #VISTA DE LOGIN Y REGISTRO
 
 
 
+def ListarUsuarios(request):
+    usuarios = Usuarios.objects.all()
+    template_name = 'listar_usuarios.html'
+    contexto = {
+        "usuarios": usuarios
+    }
+    return render(request, template_name, contexto)
+
+
 class EliminarUsuario(LoginRequiredMixin, DeleteView):
     model = Usuarios
-    template_name= 'usuarios/confirma_eliminar.html'
-    success_url = reverse_lazy('apps.blog:listar_usuarios')
+    template_name = 'confirma_eliminar.html'
+    success_url = reverse_lazy('listar')
+    
+    
+class editar_perfil(LoginRequiredMixin, UpdateView):
+    model = Usuarios
+    fields = ['first_name','last_name','username','fecha_nacimiento', 'email', 'imagen']
+    template_name = 'editar_perfil.html'
+    success_url = reverse_lazy('listar')

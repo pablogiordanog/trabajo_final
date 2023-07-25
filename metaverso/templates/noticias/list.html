@@ -1,62 +1,78 @@
-{% extends 'base.html' %}
+{% load static %}
+{%include 'navbar.html'%}
 
-{% block title %}
-<title>Noticias</title>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTICIAS</title>
+    
+    <link rel="stylesheet" href="{% static 'css/listar.css' %}">
+    
+</head>
+    <body>
+            {% if noticias %}
+            <form action="{% url 'apps.noticias:list' %}" class="d-flex" role="search" method="get">
+                <input class="form-control me-2" style="height: 25%; width: 95%; margin-top: 8%;" type="search"
+                    placeholder="Buscar Noticia" aria-label="Search" name="buscador">
+                <button class="btn-primary" style="height: 25%; margin-top: 2.5%;" type="submit">Buscar</button>
+            </form>
 
-{% block content %}
 
-<section data-bs-version="5.1" class="timeline3 cid-tf4QbpyVP7" id="timeline3-o">
-    <div class="container-fluid" style="margin-top: 2%">
-        <div class="mbr-section-head">
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2" style="text-align: center;">
-                <strong>Noticias</strong>
-            </h3>
-        </div>
-        {% if noticias %}
-        <form action="{% url 'apps.noticias:list' %}" class="d-flex" role="search" method="get">
-            <input class="form-control me-2" style="height: 25%; width: 95%; margin-top: 2%;" type="search"
-                placeholder="Buscar noticias" aria-label="Search" name="buscador">
-            <button class="btn-primary" style="height: 25%; margin-top: 2.5%;" type="submit">Buscar</button>
-        </form>
-        <form method="GET" action="{% url 'apps.noticias:order_notice_for_category' %}">
-            <button class="btn-primary" name="orden" type="submit" value="fecha">Ordenar por
-                fecha</button>
-            <button class="btn-primary" name="orden" type="submit" value="titulo">Ordenar por
-                título</button>
-        </form>
-        {% endif %}
-        <br>
-        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_notice' %}">Nueva Noticia</a>
-        <div class="row" style="margin-bottom: 2%;">
-            {% for n in noticias %}
-            <div class="col-md-4 mb-3">
-                <div class="card" style="text-align: center;">
-                    <div class="card-img-top" style="display: block; width: 70%; margin: auto;">
-                        {% if n.imagen %}
-                        <img src="{{n.imagen.url}}" class="card-img-top w-50" alt="{{n.titulo}}">
+            <form method="GET" action="{% url 'apps.noticias:list' %}">
+                {% for categoria in categorias %}
+                
+                    <button class="btn-primary" name="categoria_id" type="submit" value="{{ categoria.id }}">
+                        {{ categoria.nombre }}
+                    </button>
+                {% endfor %}
+               
+            </form>
+
+
+            <form method="GET" action="{% url 'apps.noticias:list' %}">
+                <button class="btn-primary" name="orden" type="submit" value="fecha">Ordenar por
+                    fecha</button>
+                <button class="btn-primary" name="orden" type="submit" value="titulo">Ordenar por
+                    título</button>
+            </form>
+
+
+            {% endif %}
+
+            
+
+
+           
+            <div class="container__card3">
+                {% for n in noticias %}
+                    <div class="card3">
+                        <div class="cover__card">
+                            {% if n.imagen %}
+                            <img src="{{n.imagen.url}}"  alt="{{n.titulo}}">
+                            {% endif %}
+                        </div>
+                        <h1>{{n.titulo}}</h1>
+                        <h2>{{n.descripcion}}</h2>
+                        <p>{{n.published}}</p>
+                        <p>Categoria:{{n.categoria}} </p>
+                        <p>Autor: {{n.autor}}</p>
+                        <a href="{% url 'apps.noticias:detail' n.id %}">DETALLE</a>
+                        
+                        <hr>
+                        {% if user.es_colaborador %}
+                        <div class="footer__card">
+                            <h3 class="user__name"> <a href="{% url 'apps.noticias:delete_notice' n.id %}" class="eliminar-link">Eliminar Noticia</a></h3>
+                            <i><a href="{% url 'apps.noticias:update_notice' n.id %}" class="eliminar-link">Editar Noticia</a></i>
+                        </div>
                         {% endif %}
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{n.titulo}}</h5>
-                        <p style='text-align: center;' class="mbr-timeline-date "><small
-                                class="text-body-secondary">{{n.published}}</small></p>
-                        <p class="card-text">{{n.descripcion}}</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Categoria: {{n.categoria}}</li>
-                        <li class="list-group-item">Autor: {{n.autor}}</li>
-                    </ul>
-                    <div class="card-body">
-                        <p><a href="{% url 'apps.noticias:update_notice' n.id %}" class="btn btn-primary"
-                                style="font-size: small;">Actualizar</a>
-                        </p>        
-                        <p><a href="{% url 'apps.noticias:delete_notice' n.id %}" class="btn btn-primary"
-                                    style="font-size: small;">Eliminar</a>       
-                        </p>   
-                    </div>
-                </div>
+                
+                {% endfor %}
             </div>
-            {% endfor %}
-</section>
-{% endblock %}
+               
+    </body>
+
+</html>
+

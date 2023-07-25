@@ -1,0 +1,111 @@
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>{{ noticia.titulo }}</title>
+    <link rel="stylesheet" href="{% static 'css/publi.css' %}">
+    <style>
+        /* Estilo para ocultar el campo de edición en línea por defecto */
+        .editar-comentario {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Título de la noticia -->
+        <h1 class="noticia-titulo">{{ noticia.titulo }}</h1>
+        <div class="noticia-imagen">
+            {% if noticia.imagen %}
+                <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" width="300">
+            {% endif %}
+            <div class="noticia-detalles">
+                <p><strong>Autor:</strong> {{ noticia.autor }}</p>
+                <p><strong>Fecha de publicación:</strong> {{ noticia.published }}</p>
+                <p><strong>Categoría:</strong> {{ noticia.categoria }}</p>
+            </div>
+        </div>
+        <p class="noticia-descripcion">{{ noticia.contenido }}</p>
+
+        <!-- Comentarios -->
+        <h2>Comentarios:</h2>
+        {% if comentarios %}
+            <ul class="comentarios-lista">
+                {% for comentario in comentarios %}
+    <li class="comentario-item">
+        <strong>{{ comentario.autor }}</strong>
+        <!-- Texto del comentario en línea -->
+        <p class="comentario-texto">{{ comentario.contenido }}</p>
+        <p>Fecha: {{ comentario.fecha }}</p>
+        {% if user.is_authenticated %}
+            {% if comentario.autor == user.username %}
+                <!-- Botón para eliminar el comentario -->
+                <form method="post" action="{% url 'apps.noticias:eliminar_comentario' comentario.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="eliminar-btn">Eliminar comentario</button>
+                </form>
+                <a href="#" class="editar-comentario-btn">Editar comentario</a>
+            {% endif %}
+        {% endif %}
+        <!-- Campo de edición en línea (oculto inicialmente) -->
+        <div class="editar-comentario" style="display: none;">
+            <textarea class="comentario-editado">{{ comentario.contenido }}</textarea>
+            <button class="guardar-edicion-btn" data-comentario-id="{{ comentario.id }}">Guardar</button>
+        </div>
+    </li>
+             {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay comentarios aún.</p>
+        {% endif %}
+
+        <!-- Formulario para agregar comentarios (con condicional para usuarios autenticados) -->
+        {% if user.is_authenticated %}
+            <h2>Agregar comentario:</h2>
+            <form method="post" action="{% url 'apps.noticias:agregar_comentario' noticia.id %}">
+                {% csrf_token %}
+                <label for="id_contenido">Comentario:</label>
+                <textarea name="contenido" id="id_contenido" cols="30" rows="4"></textarea>
+                <br>
+                <input type="submit" value="Agregar Comentario">
+            </form>
+        {% else %}
+            <p>Para agregar un comentario, primero debes <a href="{% url 'registro' %}">iniciar sesión</a>.</p>
+        {% endif %}
+    </div>
+
+    <!-- JavaScript para habilitar la edición de comentarios -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editarComentarioBtns = document.querySelectorAll('.editar-comentario-btn');
+            const comentarioEditados = document.querySelectorAll('.comentario-editado');
+            const guardarEdicionBtns = document.querySelectorAll('.guardar-edicion-btn');
+
+            editarComentarioBtns.forEach((btn) => {
+                btn.addEventListener('click', function () {
+                    const comentarioID = this.dataset.comentarioId;
+                    const comentarioTexto = this.parentElement.querySelector('.comentario-texto');
+                    const comentarioEditado = this.parentElement.querySelector('.editar-comentario');
+
+                    comentarioTexto.style.display = 'none';
+                    comentarioEditado.style.display = 'block';
+                });
+            });
+
+            guardarEdicionBtns.forEach((btn) => {
+                btn.addEventListener('click', function () {
+                    const comentarioID = this.dataset.comentarioId;
+                    const comentarioTexto = this.parentElement.parentElement.querySelector('.comentario-texto');
+                    const comentarioEditado = this.parentElement;
+
+                    comentarioTexto.textContent = comentarioEditado.querySelector('.comentario-editado').value;
+                    comentarioTexto.style.display = 'block';
+                    comentarioEditado.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

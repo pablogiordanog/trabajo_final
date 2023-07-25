@@ -46,34 +46,20 @@
 
             <div class="container__card">
 
-                <div class="card c1">
-                    <div class="icon">
-                        <img src="{% static 'images/anime.svg' %}" alt="">
+                <div class="container__card">
+                    {% for noticia in noticias_recientes %}
+                    <div class="card">
+                        <div class="icon">
+                            <img src="{% if noticia.imagen %}{{ noticia.imagen.url }}{% else %}{% static 'images/default_image.jpg' %}{% endif %}" alt="">
+                        </div>
+                        <div class="info__description">
+                            <h3>{{ noticia.titulo }}</h3>
+                            <p>{{ noticia.descripcion }}</p>
+                            <br>
+                            <a href="{% url 'apps.noticias:detail' noticia.id %}">VER NOTICIA</a>
+                        </div>
                     </div>
-                    <div class="info__description">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At, repellendus dolor dolorem voluptate aut expedita doloribus molestias modi libero excepturi cum perferendis laboriosam praesentium provident suscipit, eius impedit quidem magnam ipsa similique necessitatibus nam delectus nesciunt magni! Temporibus autem, reprehenderit amet quidem aliquid architecto, blanditiis, neque quam asperiores eum enim.</p>
-                        <input type="button" value="Leer Más">
-                    </div>
-                </div>
-
-                <div class="card c2">
-                    <div class="icon">
-                        <img src="{% static 'images/VRlady (1).svg' %}" alt="">
-                    </div>
-                    <div class="info__description">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At, repellendus dolor dolorem voluptate aut expedita doloribus molestias modi libero excepturi cum perferendis laboriosam praesentium provident suscipit, eius impedit quidem magnam ipsa similique necessitatibus nam delectus nesciunt magni! Temporibus autem, reprehenderit amet quidem aliquid architecto, blanditiis, neque quam asperiores eum enim.</p>
-                        <input type="button" value="Leer Más">
-                    </div>
-                </div>
-
-                <div class="card c3">
-                    <div class="icon">
-                        <img src="{% static 'images/anime.svg' %}" alt="">
-                    </div>
-                    <div class="info__description">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At, repellendus dolor dolorem voluptate aut expedita doloribus molestias modi libero excepturi cum perferendis laboriosam praesentium provident suscipit, eius impedit quidem magnam ipsa similique necessitatibus nam delectus nesciunt magni! Temporibus autem, reprehenderit amet quidem aliquid architecto, blanditiis, neque quam asperiores eum enim.</p>
-                        <input type="button" value="Leer Más">
-                    </div>
+                    {% endfor %}
                 </div>
 
                 

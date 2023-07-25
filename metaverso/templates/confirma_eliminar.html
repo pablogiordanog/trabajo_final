@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Usuario</title>
+</head>
+<body>
+    <h1>Eliminar usuario</h1>
+
+<p>Seguro que desea eliminar el usuario?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" action="" value="Si, eliminar." />
+</form>
+<a href="{% url 'listar' %}" class="btn btn-primary" style="font-size: small;">No, volver.</a>
+</body>
+</html>
+
+
+

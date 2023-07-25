@@ -1,0 +1,135 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #555;
+  margin: 20px 0 10px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 15px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Estilos para el formulario de agregar comentarios */
+form {
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Estilos para el botón de eliminar comentario */
+form button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Estilos para la imagen de la noticia */
+img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 20px;
+}
+
+/* Estilos para los comentarios */
+.comentarios-lista {
+  margin: 20px 0;
+  padding: 0;
+}
+
+.comentario-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.comentario-item strong {
+  color: #007bff;
+}
+
+/* Estilos para el enlace de editar comentario */
+.editar-comentario {
+  color: #007bff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+/* Estilos para el diseño específico */
+.noticia-imagen {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.noticia-titulo {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  margin: 80px 0; /* Ajuste de margen superior e inferior */
+  font-size: 24px;
+  margin-bottom: 10px; /* Ajuste de margen inferior */
+}
+
+.noticia-detalles {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.noticia-detalles p {
+  margin: 10px;
+}
+
+.noticia-descripcion {
+  text-align: center;
+}

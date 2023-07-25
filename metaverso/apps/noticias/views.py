@@ -5,104 +5,119 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView,UpdateView, DeleteView
 from django.views.generic import ListView
 
-from .models import Noticia, Categoria
+from .models import Noticia, Categoria, Comentario
 from .forms import FormNotice
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import DetailView
+from django.utils import timezone
+from .forms import AddNoticeForm 
+
 
 # Create your views here.
-class AddNotice(CreateView):
+class AddNotice(LoginRequiredMixin, CreateView):
     model = Noticia
-    fields = ['titulo', 'autor', 'descripcion', 'published', 'imagen', 'categoria']
+    form_class = AddNoticeForm  
     template_name = 'noticias/new_notice.html'
     success_url = reverse_lazy('apps.noticias:list')
     
     def form_valid(self, form):
-        #form.instance.colaborador = self.request.user
+        form.instance.autor = self.request.user
+        form.instance.published = timezone.now()
         return super().form_valid(form)
 
-class UpdateNotice(UpdateView):
+class UpdateNotice(LoginRequiredMixin, UpdateView):
     model = Noticia
     fields = ['id','titulo','autor','descripcion','published','imagen','categoria']
     template_name = 'noticias/update_notice.html'
     success_url = reverse_lazy('apps.noticias:list')
     
-class DeleteNotice(DeleteView):
+class DeleteNotice(LoginRequiredMixin, DeleteView):
     model = Noticia
     template_name = 'noticias/confirm_del.html'
     success_url = reverse_lazy('apps.noticias:list')    
+    
+    
 
 class ListNotice(ListView):
     model = Noticia
     template_name = 'noticias/list.html'
     context_object_name = "noticias"
-    # -----Paginación------
-    #paginate_by = 3
 
-    def get_context_data(self):
-        context = super().get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         categorias = Categoria.objects.all()
         context['categorias'] = categorias
         return context
     
-    def get_queryset(self) -> QuerySet[Any]:
-        query = self.request.GET.get('buscador')
+    def get_queryset(self):
         queryset = super().get_queryset()
+        categoria_id = self.request.GET.get('categoria_id')
 
+        if categoria_id:
+            categoria = get_object_or_404(Categoria, id=categoria_id)
+            queryset = queryset.filter(categoria=categoria)
+
+        query = self.request.GET.get('buscador')
         if query:
             queryset = queryset.filter(titulo__icontains=query)
-        return queryset.order_by('titulo')
+        
+        orden = self.request.GET.get('orden')
+        if orden == 'fecha':
+            queryset = queryset.order_by('published')  # Ordenar por fecha
+        elif orden == 'titulo':
+            queryset = queryset.order_by('titulo')  # Ordenar por título
 
-def ListaNoticeForCategory(request, categoria):
-    categorias2 = Categoria.objects.filter(nombre=categoria)
-    noticias = Noticia.objects.filter(
-        categoria=categorias2[0].id).order_by('published')
-    categorias = Categoria.objects.all()
-    template_name = 'noticias/list.html'
-    contexto = {
-        'noticias': noticias,
-        'categorias': categorias
-    }
-    return render(request, template_name, contexto)
+        return queryset
 
 
-def order_notice_for_category(request):
-    # Obtener el parámetro 'orden' de la URL(para eso en html debe haber un elemento con name='orden' y un valor(value=''))
-    orden = request.GET.get('orden', '')
-    # Validamos lo que contiene value
-    print(orden)
-    if orden == 'fecha':
-        # Ordenar por fecha(Si quisiera desc seria: ('-published'))
-        notices = Noticia.objects.order_by('published')
-    elif orden == 'titulo':
-        # Ordenar por título(Si quisiera desc seria: ('-titulo'))
-        notices = Noticia.objects.order_by('titulo')
-        print('entro en titulo')
-        print(notices)
-    else:  # Si no hay nada solo todos sin orden
-        notices = Noticia.objects.all()  # Obtener todos las noticias sin ordenar
-
-    context = {
-        'noticias': notices,
-    }
-    return render(request, 'noticias/list.html', context)
-
-
-def notice_details(request, id):
-    notice = Noticia.objects.get(id=id)
-    form = FormNotice(request.POST)
-
-    if form.is_valid():
-        #if request.user.is_authenticated:
-            aux = form.save(commit=False)
-            aux.notice = notice
-            aux.save()
-            form = FormNotice()
-        #else:
-        #    return redirect('apps.usuarios:iniciar_sesion')
-
-    contexto = {
-        'notice': notice,
-        'form': form,
-    }
-    template_name = 'noticias/notice.html'
-    return render(request, template_name, contexto)
+class AddCategory(LoginRequiredMixin, CreateView):
+    model = Categoria
+    fields = ['nombre']
+    template_name = 'noticias/new_category.html'
+    success_url = reverse_lazy('apps.noticias:add_notice')
     
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    
+def agregar_comentario(request, noticia_id):
+    noticia = get_object_or_404(Noticia, id=noticia_id)
+
+    if request.method == 'POST':
+        contenido = request.POST.get('contenido')
+
+        if contenido:
+            # Obtener el usuario actualmente autenticado
+            autor = request.user.username  # Puedes usar el nombre de usuario o el nombre completo del usuario
+            comentario = Comentario(noticia=noticia, autor=autor, contenido=contenido)
+            comentario.save()
+    
+    return redirect('apps.noticias:detail', pk=noticia_id)
+
+
+
+class NoticiaDetailView(DetailView):
+    model = Noticia
+    template_name = 'noticias/noticia.html'
+    context_object_name = 'noticia'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comentarios = self.object.comentarios.all()
+        print(comentarios)  # Agregar esta línea para imprimir los comentarios
+        context['comentarios'] = comentarios
+        return context
+    
+    
+    
+def eliminar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    if request.method == 'POST':
+        comentario.delete()
+    return redirect('apps.noticias:detail', pk=comentario.noticia.pk)
+
+
+
+
+
