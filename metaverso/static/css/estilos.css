@@ -103,7 +103,7 @@ nav ul li a{
 }
 
 .select{
-    background: #359EF9;
+    background: #3381c5;
     padding: 10px 30px;
     color: white;
     border-radius: 20px;
@@ -125,6 +125,8 @@ nav ul li a{
 .btn__menu:hover{
     background: #f5f5f5;
 }
+
+
 
 /*COVER*/
 
@@ -355,6 +357,7 @@ nav ul li a{
     font-family: 'Poppins', sans-serif;
     transition: all 300ms;
     border-radius: 20px;
+    z-index: 2;
 }
 
 .card:hover{
@@ -478,6 +481,7 @@ footer{
     background-color: var(--color-esqueleto);
     background-image: url(../images/background-footer.svg);
     background-size: cover;
+   
 
     /*webkit-mask-image: url("images/background-footer.svg");
     mask-image: url("../Images/background-footer.svg");
@@ -492,12 +496,14 @@ footer{
     max-width: 1200px;
     margin: auto;
     padding-top: 100px;
+   
 }
 
 .box__footer{
     display: flex;
     flex-direction: column;
     padding: 40px;
+    z-index: 2;
 }
 
 .box__footer .logo img{
@@ -562,12 +568,14 @@ footer{
     position: relative;
     height: 100vh;
     padding: 0 40px;
+  
 }
 
 #inicio .contenido {
     max-width: 1200px;
     margin: auto;
     height: 100%;
+     
 }
 
 #inicio .contenido .info {
@@ -678,4 +686,10 @@ footer{
 
 
 
- 
+  #particles-js {
+	height: 100vh; 
+	width: 100%;
+    position: fixed;
+    z-index: 2;
+   
+}

@@ -27,7 +27,7 @@
                     {% endif %}
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
                     <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
-                    <li><a href="#">METAVERSO</a></li>
+                    <li><a href="{% url 'metaverso' %}">METAVERSO</a></li>
                     <li><a href="#">{{user.username}}</a></li>
                     <div class="profile">
                         <img src="{{ user.imagen.url }}" alt="Profile Picture">
@@ -53,7 +53,7 @@
                 <ul>
                     <li><a href="{% url 'descripcion' %}">NOSOTROS</a></li>
                     <li><a href="{% url 'apps.noticias:list' %}">NOTICIAS</a></li>
-                    <li><a href="#">METAVERSO</a></li>
+                    <li><a href="{% url 'metaverso' %}">METAVERSO</a></li>
                     <li><a href="{% url 'registro' %}" class="select">Ingresar/Registrate</a></li>
                 </ul>
             </nav>

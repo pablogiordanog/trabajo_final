@@ -23,12 +23,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from .views import index
 from .views import descripcion
-
+from .views import metaverso
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='inicio'),
     path('descripcion/', descripcion, name='descripcion'),
+    path('metaverso/', metaverso, name='metaverso'),
     path('', include('apps.blog.urls')),
     path('noticias/', include('apps.noticias.urls')),
 

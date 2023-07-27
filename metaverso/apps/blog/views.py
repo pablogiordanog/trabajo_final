@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from .forms import RegistroForm
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def noticias(request):
     return render(request, 'noticias.html')
@@ -44,9 +44,19 @@ def login_or_register(request):  #VISTA DE LOGIN Y REGISTRO
 
 def ListarUsuarios(request):
     usuarios = Usuarios.objects.all()
+    paginator = Paginator(usuarios, 6)  
+
+    page = request.GET.get('page')
+    try:
+        usuarios_paginados = paginator.page(page)
+    except PageNotAnInteger:
+        usuarios_paginados = paginator.page(1)
+    except EmptyPage:
+        usuarios_paginados = paginator.page(paginator.num_pages)
+
     template_name = 'listar_usuarios.html'
     contexto = {
-        "usuarios": usuarios
+        "usuarios": usuarios_paginados
     }
     return render(request, template_name, contexto)
 

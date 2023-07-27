@@ -1,0 +1,58 @@
+{% load static %}
+{%include 'navbar.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">	
+	
+	<!-- <link href="https://vjs.zencdn.net/7.2/video-js.min.css" rel="stylesheet"> -->
+	<!-- <script src="https://vjs.zencdn.net/7.2/video.min.js"></script> -->
+
+	<link rel="stylesheet" href="{% static 'css/video-js.css' %}">
+	<script src="{% static 'js/video.js' %}"></script>
+	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'css/video.css' %}">
+	<title>Video.js</title>
+</head>
+<body>
+	
+
+	<main>
+		<div class="contenedor">
+			<video class="fm-video video-js vjs-16-9 vjs-big-play-centered" data-setup="{}" controls id="fm-video">
+				<source src="{% static 'images/0726.mp4' %}" type="video/mp4">
+			</video>
+	
+			<article>
+				<h2>HABLEMOS DE METAVERSO</h2>
+				<p>
+                    El metaverso es un fascinante concepto que ha ganado popularidad en la cultura tecnológica actual.
+                    Se trata de un espacio virtual en línea compartido y persistente, que combina mundos virtuales,
+                    realidades aumentadas y entornos simulados. Imagina un mundo digital interactivo y colaborativo
+                    que se extiende más allá de lo que conocemos hoy.
+                </p>
+                <p>
+                    El término "metaverso" fue popularizado por el autor de ciencia ficción Neal Stephenson en su novela
+                    "Snow Crash" en 1992. Desde entonces, ha sido ampliamente discutido y adoptado en la industria de
+                    la tecnología y los medios, capturando la imaginación de muchos.
+                </p>
+                <p>
+                    Dentro del metaverso, los usuarios pueden explorar entornos virtuales, interactuar con otros y
+                    participar en actividades sociales, comerciales, educativas y de entretenimiento. Es un espacio
+                    digital inmersivo y altamente interactivo que tiene el potencial de revolucionar nuestra forma de
+                    vivir, trabajar y socializar en línea.
+                </p>
+			</article>
+		</div>
+	</main>
+
+	<script>
+		var reproductor = videojs('fm-video', {
+			fluid: true
+		});
+	</script>
+</body>
+</html>

@@ -14,8 +14,9 @@
 </head>
 <body>
     
-
+    <div id="particles-js"></div>
     <div class="container_all" id="container__all">
+        
         <div class="cover">
 
             <div class="bg_color"></div>
@@ -28,7 +29,8 @@
                     <h2>METAVERSO</h2>
                     <p>Te imaginas estar en un mundo paralelo donde los humanos interactúan 
                         como avatares? Ahora es real!</p>
-                    <input type="button" value="Leer Mas">
+                        <br>
+                    <a href="{% url 'metaverso' %}" class="select">Leer Más</a>
                 </div>
                 <div class="container__vector">
                     <img src="{% static 'images/undraw_Code_thinking_re_gka2.svg' %}" alt="">
@@ -103,7 +105,8 @@
         </Footer>
 
 </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="{% static 'js/app.js' %}"> </script>
     <script src="{% static 'js/estilos.js' %}"> </script>
 </body>
 </html>

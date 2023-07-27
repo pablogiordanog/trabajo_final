@@ -54,6 +54,39 @@
 
         </main>
 
+        <script>
+            const inputElement = document.getElementById('id_first_name');
+            inputElement.addEventListener('keypress', (event) => {
+                const charCode = event.which || event.keyCode;
+                const char = String.fromCharCode(charCode);
+                const letras = /^[A-Za-z]+$/;
+                if (!letras.test(char)) {
+                    event.preventDefault();
+                    alert('Los campos de nombre solo deben contener letras.');
+                }
+            });
+        
+            const inputElement1 = document.getElementById('id_last_name');
+            inputElement1.addEventListener('keypress', (event) => {
+                const charCode = event.which || event.keyCode;
+                const char = String.fromCharCode(charCode);
+                const letras = /^[A-Za-z]+$/;
+                if (!letras.test(char)) {
+                    event.preventDefault();
+                    alert('Los campos de apellido solo deben contener letras.');
+                }
+            });
+        
+            const passwordElement = document.getElementById('id_password1');
+            passwordElement.addEventListener('input', () => {
+                const password = passwordElement.value;
+                if (password.length < 8) {
+                    passwordElement.setCustomValidity('La contraseña debe tener al menos 8 caracteres.');
+                } else {
+                    passwordElement.setCustomValidity('');
+                }
+            });
+        </script>
         <script src="{% static 'js/registro.js' %}"> </script>
 </body>
 </html>

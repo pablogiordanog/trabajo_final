@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView
 from django.utils import timezone
 from .forms import AddNoticeForm 
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 # Create your views here.
 class AddNotice(LoginRequiredMixin, CreateView):
@@ -48,6 +48,18 @@ class ListNotice(ListView):
         context = super().get_context_data(**kwargs)
         categorias = Categoria.objects.all()
         context['categorias'] = categorias
+        noticias = context['noticias']
+        paginator = Paginator(noticias, 6)  
+
+        page = self.request.GET.get('page')
+        try:
+            noticias_paginadas = paginator.page(page)
+        except PageNotAnInteger:
+            noticias_paginadas = paginator.page(1)
+        except EmptyPage:
+            noticias_paginadas = paginator.page(paginator.num_pages)
+
+        context['noticias'] = noticias_paginadas
         return context
     
     def get_queryset(self):

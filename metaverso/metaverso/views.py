@@ -10,3 +10,7 @@ def descripcion(request):
     return render(request, 'descripcion.html')
 
 
+def metaverso(request):
+    return render(request, 'metaverso.html')
+
+
