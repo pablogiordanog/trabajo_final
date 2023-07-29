@@ -21,8 +21,8 @@ class Noticia(models.Model):
     descripcion = models.CharField(max_length=100)  
     contenido = models.TextField() 
     published = models.DateTimeField(default=timezone.now)
-    imagen = models.ImageField(null=True, blank=True, upload_to='noticias', default='noticias/notice_default.png')
-    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
+    imagen = models.ImageField(null=True, blank=True, upload_to='noticias', default='noticias/blog1.jpg')
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, null=False)  # Usa CASCADE para eliminar las noticias asociadas al eliminar la categoría
 
     def __str__(self):
         return self.titulo

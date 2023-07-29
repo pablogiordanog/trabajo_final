@@ -77,15 +77,39 @@
                 }
             });
         
-            const passwordElement = document.getElementById('id_password1');
-            passwordElement.addEventListener('input', () => {
-                const password = passwordElement.value;
-                if (password.length < 8) {
-                    passwordElement.setCustomValidity('La contraseña debe tener al menos 8 caracteres.');
-                } else {
-                    passwordElement.setCustomValidity('');
-                }
-            });
+            const inputPass1 = document.getElementById('id_password1');
+inputPass1.addEventListener('change', (event) => {
+    let pass1 = event.target;
+    let pass2 = document.getElementById('id_password2');
+    if (pass1.value.length >= 8 && pass1.value == pass2.value){
+        pass1.parentNode.querySelector("label").style.backgroundColor = "";
+        pass2.parentNode.querySelector("label").style.backgroundColor = "";
+    }else{
+        if(pass2.value.length > 0){
+            pass1.parentNode.querySelector("label").style.backgroundColor = "red";
+            pass2.parentNode.querySelector("label").style.backgroundColor = "red";
+            pass1.focus();
+            alert("Las contraseñas son distintas o tienen menos de 8 caracteres");
+        }
+    }
+});
+
+const inputPass2 = document.getElementById('id_password2');
+inputPass2.addEventListener('change', (event) => {
+    let pass2 = event.target;
+    let pass1 = document.getElementById('id_password1');
+    if (pass1.value.length >= 8 && pass1.value == pass2.value){
+        pass1.parentNode.querySelector("label").style.backgroundColor = "";
+        pass2.parentNode.querySelector("label").style.backgroundColor = "";
+    }else{
+        pass1.parentNode.querySelector("label").style.backgroundColor = "red";
+        if(pass2.value.length > 0){
+            pass2.parentNode.querySelector("label").style.backgroundColor = "red";
+            pass2.focus();
+            alert("Las contraseñas son distintas o tienen menos de 8 caracteres");
+        }
+    }
+});
         </script>
         <script src="{% static 'js/registro.js' %}"> </script>
 </body>

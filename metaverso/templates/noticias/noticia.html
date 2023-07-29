@@ -63,17 +63,16 @@
 
         <!-- Formulario para agregar comentarios (con condicional para usuarios autenticados) -->
         {% if user.is_authenticated %}
-            <h2>Agregar comentario:</h2>
-            <form method="post" action="{% url 'apps.noticias:agregar_comentario' noticia.id %}">
-                {% csrf_token %}
-                <label for="id_contenido">Comentario:</label>
-                <textarea name="contenido" id="id_contenido" cols="30" rows="4"></textarea>
-                <br>
-                <input type="submit" value="Agregar Comentario">
-            </form>
-        {% else %}
-            <p>Para agregar un comentario, primero debes <a href="{% url 'registro' %}">iniciar sesión</a>.</p>
-        {% endif %}
+    <form method="post" action="{% url 'apps.noticias:agregar_comentario' noticia.id %}">
+        {% csrf_token %}
+        <label for="id_contenido">Comentario:</label>
+        <textarea name="contenido" id="id_contenido" cols="30" rows="4" placeholder="Escribe tu comentario aquí..."></textarea>
+        <br>
+        <input type="submit" value="Agregar Comentario">
+    </form>
+{% else %}
+    <p>Para agregar un comentario, primero debes <a href="{% url 'registro' %}">iniciar sesión</a>.</p>
+{% endif %}
     </div>
 
     <!-- JavaScript para habilitar la edición de comentarios -->

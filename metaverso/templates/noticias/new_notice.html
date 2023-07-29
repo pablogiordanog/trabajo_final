@@ -1,5 +1,5 @@
 {% load static %}
-{%include 'navbar.html'%}
+{% include 'navbar.html' %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,58 +10,51 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="main-container" style="text-align: center; margin-top: 10%;">
         <form action="" method="POST" enctype="multipart/form-data">
-            <form method="post">{% csrf_token %}
-                <div class="overlay">
-                    <form>
-                        <div class="con">
-                            
-                            <div>
-                                {{form.as_p}}
-                                {{form.media}}
-                                <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_category' %}">Agrega Categoria</a>
-                                <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
-                                    style="text-align: center;" data-bs-target="#exampleModal" value="Guardar noticia" />
-                                    <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver</a>
-                                
-                                    <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Se Cargo la Noticia</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Su noticia NO fue cargada!
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver la Lista de Noticias</a>
-                                            </div>
-                                        </div>
+            {% csrf_token %}
+            <div class="overlay">
+                <div class="con">
+                    <div>
+                        {{ form.as_p }}
+                        {{ form.media }} 
+                        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_category' %}">Agregar Categoría</a>
+                        <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
+                            style="text-align: center;" data-bs-target="#exampleModal" value="Guardar noticia" />
+                        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver</a>
+
+                        {% if form.is_bound and not form.errors %}
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Libro Cargado</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Su libro fue cargado con éxito.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver a la Lista de Noticias</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                        {% endif %}
+                    </div>
                 </div>
-            </form>
+            </div>
         </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-    
 </body>
 </html>
-
-
-

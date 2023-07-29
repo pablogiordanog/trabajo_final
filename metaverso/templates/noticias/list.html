@@ -1,5 +1,5 @@
 {% load static %}
-{%include 'navbar.html'%}
+{% include 'navbar.html' %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,97 +9,109 @@
     <title>NOTICIAS</title>
     
     <link rel="stylesheet" href="{% static 'css/listar.css' %}">
-    
+    <style>
+        .no-noticias-container {
+            text-align: center;
+            margin-top: 250px;
+        }
+
+        .no-noticias-message {
+            font-size: 18px;
+            color: #888888;
+        }
+    </style>
 </head>
 
-    <body>
-        <div class="container__background-triangle">
-            <div class="triangle triangle1"></div>
-            <div class="triangle triangle2"></div>
-            <div class="triangle triangle3"></div>
-        </div>
-  
-            {% if noticias %}
-            <form action="{% url 'apps.noticias:list' %}" class="d-flex" role="search" method="get">
-                <input class="form-control me-2" style="height: 25%; width: 95%; margin-top: 8%;" type="search"
-                    placeholder="Buscar Noticia" aria-label="Search" name="buscador">
-                <button class="btn-primary" style="height: 25%; margin-top: 2.5%;" type="submit">Buscar</button>
-            </form>
+<body>
+    <div class="container__background-triangle">
+        <div class="triangle triangle1"></div>
+        <div class="triangle triangle2"></div>
+        <div class="triangle triangle3"></div>
+    </div>
 
+    <form action="{% url 'apps.noticias:list' %}" class="d-flex" role="search" method="get">
+        <input class="form-control me-2" style="height: 25%; width: 95%; margin-top: 8%;" type="search"
+            placeholder="Buscar Noticia" aria-label="Search" name="buscador">
+        <button class="btn-primary" style="height: 25%; margin-top: 8%;" type="submit">Buscar</button>
+    </form>
 
-            <form method="GET" action="{% url 'apps.noticias:list' %}">
-                {% for categoria in categorias %}
-                
-                    <button class="btn-primary" name="categoria_id" type="submit" value="{{ categoria.id }}">
-                        {{ categoria.nombre }}
-                    </button>
-                {% endfor %}
-               
-            </form>
+    <form method="GET" action="{% url 'apps.noticias:list' %}">
+        <button class="btn-primary" name="orden" type="submit" value="fecha">Ordenar por fecha</button>
+        <button class="btn-primary" name="orden" type="submit" value="titulo">Ordenar por título</button>
+    </form>
 
-
-            <form method="GET" action="{% url 'apps.noticias:list' %}">
-                <button class="btn-primary" name="orden" type="submit" value="fecha">Ordenar por
-                    fecha</button>
-                <button class="btn-primary" name="orden" type="submit" value="titulo">Ordenar por
-                    título</button>
-            </form>
-
-
+    <form method="GET" action="{% url 'apps.noticias:list' %}">
+        {% for categoria in categorias %}           
+        <div class="category-item">
+            <button class="btn-primary" name="categoria_id" type="submit" value="{{ categoria.id }}">
+                {{ categoria.nombre }}
+            </button>
+            {% if user.es_colaborador %}
+            <a href="{% url 'apps.noticias:delete_category' categoria.id %}" class="eliminar-link2">&times;</a>
             {% endif %}
+        </div>
+        {% endfor %}  
+    </form>
 
+    {% if noticias %}
+    <div class="container__card3">
+        {% for n in noticias %}
+        <div class="card3">
+            <div class="cover__card">
+                {% if n.imagen %}
+                <img src="{{n.imagen.url}}" alt="{{n.titulo}}">
+                {% endif %}
+            </div>
+            <h1>{{n.titulo}}</h1>
+            <h2>{{n.descripcion}}</h2>
+            <p>{{n.published}}</p>
+            <p>Categoria:{{n.categoria}} </p>
+            <p>Autor: {{n.autor}}</p>
+            <a href="{% url 'apps.noticias:detail' n.id %}">DETALLE</a>
             
-
-
-           
-            <div class="container__card3">
-                {% for n in noticias %}
-                    <div class="card3">
-                        <div class="cover__card">
-                            {% if n.imagen %}
-                            <img src="{{n.imagen.url}}"  alt="{{n.titulo}}">
-                            {% endif %}
-                        </div>
-                        <h1>{{n.titulo}}</h1>
-                        <h2>{{n.descripcion}}</h2>
-                        <p>{{n.published}}</p>
-                        <p>Categoria:{{n.categoria}} </p>
-                        <p>Autor: {{n.autor}}</p>
-                        <a href="{% url 'apps.noticias:detail' n.id %}">DETALLE</a>
-                        
-                        <hr>
-                        {% if user.es_colaborador %}
-                        <div class="footer__card">
-                            <h3 class="user__name"> <a href="{% url 'apps.noticias:delete_notice' n.id %}" class="eliminar-link">Eliminar Noticia</a></h3>
-                            <i><a href="{% url 'apps.noticias:update_notice' n.id %}" class="eliminar-link">Editar Noticia</a></i>
-                        </div>
-                        {% endif %}
-                    </div>
-                
-                {% endfor %}
+            <hr>
+            {% if user.es_colaborador %}
+            <div class="footer__card">
+                <h3 class="user__name"> <a href="{% url 'apps.noticias:delete_notice' n.id %}" class="eliminar-link">Eliminar Noticia</a></h3>
+                <i><a href="{% url 'apps.noticias:update_notice' n.id %}" class="eliminar-link">Editar Noticia</a></i>
             </div>
-            <div class="pagination-container">
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if noticias.has_previous %}
-                            <a href="?page=1">&laquo; primera</a>
-                            <a href="?page={{ noticias.previous_page_number }}">anterior</a>
-                        {% endif %}
-                
-                        <span class="current">
-                            Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}.
-                        </span>
-                
-                        {% if noticias.has_next %}
-                            <a href="?page={{ noticias.next_page_number }}">siguiente</a>
-                            <a href="?page={{ noticias.paginator.num_pages }}">última &raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Si no hay noticias, mostrar la leyenda -->
+    <div class="no-noticias-container">
+        {% if request.GET.categoria_id %}
+        <p class="no-noticias-message">No hay noticias para esta categoría.</p>
+        {% elif request.GET.buscador %}
+        <p class="no-noticias-message">No se encontraron noticias con el nombre "{{ request.GET.buscador }}".</p>
+        {% else %}
+        <p class="no-noticias-message">No hay noticias cargadas aún.</p>
+        {% endif %}
+    </div>
+    {% endif %}
 
-               
-    </body>
+    <div class="pagination-container">
+        <div class="pagination">
+            <span class="step-links">
+                {% if noticias.has_previous %}
+                <a href="?page=1">&laquo; primera</a>
+                <a href="?page={{ noticias.previous_page_number }}">anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ noticias.number }} de {{ noticias.paginator.num_pages }}.
+                </span>
+
+                {% if noticias.has_next %}
+                <a href="?page={{ noticias.next_page_number }}">siguiente</a>
+                <a href="?page={{ noticias.paginator.num_pages }}">última &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+</body>
 
 </html>
-

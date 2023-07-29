@@ -133,3 +133,18 @@ def eliminar_comentario(request, comentario_id):
 
 
 
+class DeleteCategory(LoginRequiredMixin, DeleteView):
+    model = Categoria
+    template_name = 'noticias/delete_category.html'
+    success_url = reverse_lazy('apps.noticias:list')
+
+    def delete(self, request, *args, **kwargs):
+        # Obtener la categoría que se va a eliminar
+        categoria = self.get_object()
+
+        # Eliminar todas las noticias asociadas a la categoría
+        noticias = Noticia.objects.filter(categoria=categoria)
+        noticias.delete()
+
+        # Llamar al método delete() de la clase base para eliminar la categoría
+        return super().delete(request, *args, **kwargs)

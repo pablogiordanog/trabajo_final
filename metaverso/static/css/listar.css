@@ -151,12 +151,12 @@
 }
 
 @media screen and (max-width: 600px) {
-  .container__cards {
+  .container__card2 {
     flex-direction: column; /* Cambiar a una columna para pantallas pequeñas */
     align-items: center; /* Centra las tarjetas en pantallas pequeñas */
   }
 
-  .card {
+  .card2 {
     width: 100%; /* Las tarjetas ocuparán todo el ancho en pantallas pequeñas */
     margin-bottom: 20px; /* Espacio entre tarjetas en pantallas pequeñas */
   }
@@ -269,6 +269,63 @@
 
 .container__card2 {
   margin-bottom: 20px; /* Espacio entre las tarjetas y el paginador */
+}
+
+
+/* Estilo para la barra de búsqueda */
+form.d-flex {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+form.d-flex input[type="search"] {
+  height: 40px;
+  width: 60%;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  flex: 1;
+}
+
+form.d-flex button.btn-primary {
+  height: 40px;
+  padding: 5px 20px;
+  border-radius: 20px;
+  margin-left: 10px;
+  margin-bottom: 0;
+}
+
+/* Estilo para los botones de categoría */
+form button.btn-primary {
+  height: 30px;
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 5px 15px;
+  border-radius: 15px;
+  background-color: #7723a1;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilo para los botones de categoría cuando están seleccionados */
+form button.btn-primary.selected {
+  background-color: #7e15c0;
+}
+
+.category-item {
+  display: inline-block; /* Alinea los elementos horizontalmente */
+  margin-right: 10px; /* Espacio entre cada categoría */
+  vertical-align: top; /* Alinea los elementos verticalmente en la parte superior */
+}
+
+.eliminar-link2 {
+  display: inline-block;
+  color: red; /* Color rojo */
+  font-size: 20px; /* Tamaño de fuente */
+  line-height: 1; /* Ajuste del espaciado entre líneas */
+  margin-top: 5px; /* Espacio entre el botón de la categoría y el enlace "x" */
 }
 
 

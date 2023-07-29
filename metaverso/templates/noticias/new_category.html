@@ -1,5 +1,5 @@
 
-{%include 'navbar.html'%}
+{% include 'navbar.html' %}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -10,47 +10,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
-    
     <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="main-container" style="text-align: center; margin-top: 12%;">
         <form action="" method="POST" enctype="multipart/form-data">
-            <form method="post">{% csrf_token %}
-                <div class="overlay">
-                    <form>
-                        <div class="con">
-                          
-                            <div>
-                                {{form.as_p}}
-                                <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
-                                    style="text-align: center;" data-bs-target="#exampleModal" value="Guardar categoria" />
-                                    <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_notice' %}">Volver</a>
-                                
-                                    <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">No Se Cargo Categoria</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                La categoria NO fue cargó!
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver la Lista de Noticias</a>
-                                            </div>
-                                        </div>
+            {% csrf_token %}
+            <div class="overlay">
+                <div class="con">
+                    <div>
+                        {{ form.as_p }}
+                        <input class="btn btn-outline-secondary" type="submit" data-bs-toggle="modal"
+                            style="text-align: center;" data-bs-target="#exampleModal" value="Guardar categoria" />
+                        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:add_notice' %}">Volver</a>
+                        
+                        {% if form.is_bound and not form.errors %}
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Categoria Generada</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        La categoria fue creada exitosamente!
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-outline-secondary" href="{% url 'apps.noticias:list' %}">Volver a la Lista de Noticias</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                        {% endif %}
+                    </div>
                 </div>
-            </form>
+            </div>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -58,5 +55,4 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-
 

@@ -7,7 +7,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 from .views import ListNotice,AddNotice, UpdateNotice, DeleteNotice,AddCategory, NoticiaDetailView, eliminar_comentario, agregar_comentario
-
+from .views import DeleteCategory
 app_name = 'apps.noticias'
 
 urlpatterns = [
@@ -21,7 +21,7 @@ urlpatterns = [
     path('noticia/<int:pk>/', NoticiaDetailView.as_view(), name='detail'),
     path('noticia/<int:noticia_id>/agregar_comentario/', agregar_comentario, name='agregar_comentario'),
     path('eliminar_comentario/<int:comentario_id>/', eliminar_comentario, name='eliminar_comentario'),
-     
+    path('delete_category/<int:pk>/', DeleteCategory.as_view(), name='delete_category'), 
     
    
     
